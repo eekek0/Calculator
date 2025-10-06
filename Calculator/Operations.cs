@@ -17,7 +17,7 @@
         public double Div(double x, double y)
         {
             if (y == 0)
-                return double.NaN;
+                throw new DivideByZeroException("Деление на ноль!");
             return x / y;
         }
     }
