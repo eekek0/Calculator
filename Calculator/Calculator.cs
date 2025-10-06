@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Calculator
+﻿namespace Calculator
 {
     class Program
     {
@@ -11,24 +9,22 @@ namespace Calculator
 
             while (true)
             {
-                Console.WriteLine("\n");
-                string[] init = io.Input();
-
-                double x = Convert.ToDouble(init[0]);
-                string op = init[1];
-                double y = Convert.ToDouble(init[2]);
+                Console.WriteLine();
+                var init = io.Input();
 
                 double result = 0;
 
-                switch (op)
+                switch (init.op)
                 {
-                    case "+": result = math.Add(x, y); break;
-                    case "-": result = math.Sub(x, y); break;
-                    case "*": result = math.Mul(x, y); break;
-                    case "/": result = math.Div(x, y); break;
+                    case "+": result = math.Add(init.x, init.y); break;
+                    case "-": result = math.Sub(init.x, init.y); break;
+                    case "*": result = math.Mul(init.x, init.y); break;
+                    case "/": result = math.Div(init.x, init.y); break;
                 }
-
-                io.Output(init, result);
+                if(double.IsNaN(result))
+                    Console.WriteLine($"{init.x} {init.op} {init.y} = inf");
+                else
+                    io.Output(init, result);
                 Console.WriteLine("Желаете продолжить? Y/N");
                 string cont = Console.ReadLine();
                 if (cont.Equals("N", StringComparison.OrdinalIgnoreCase))

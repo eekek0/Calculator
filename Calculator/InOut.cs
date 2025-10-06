@@ -1,56 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Calculator
+﻿namespace Calculator
 {
     public class InOut
     {
-
-        public bool DigitCheck(string digit)
+        private double ReadNumber(string prompt)
         {
-            return double.TryParse(digit, out _);
+            while (true)
+            {
+                Console.WriteLine(prompt);
+                string input = Console.ReadLine();
+
+                if (double.TryParse(input, out double value))
+                    return value;
+
+                Console.WriteLine("Ошибка: введите корректное число.");
+            }
         }
 
-        public string[] Input()
+        private string ReadOperator(string[] ops)
+        {
+            while (true)
+            {
+                Console.WriteLine("Введите операцию (+, -, *, /): ");
+                string op = Console.ReadLine();
+                if (ops.Contains(op))
+                    return op;
+
+                Console.WriteLine("Ошибка: введите одну из операций (+, -, *, /).");
+            }
+        }
+
+        public (double x, string op, double y) Input()
         {
             string[] ops = { "+", "-", "*", "/" };
 
-            string x;
-            while (true)
-            {
-                Console.WriteLine("Введите первое число:");
-                x = Console.ReadLine();
-                if (DigitCheck(x)) break;
-                Console.WriteLine("Ошибка: введите корректное число.");
-            }
+            double x = ReadNumber("Введите первое число: ");
+            string op = ReadOperator(ops);
+            double y = ReadNumber("Введите второе число: ");
 
-            string op;
-            while (true)
-            {
-                Console.WriteLine("Введите операцию (+, -, *, /):");
-                op = Console.ReadLine();
-                if (ops.Contains(op)) break;
-                Console.WriteLine("Ошибка: введите одну из операций (+, -, *, /).");
-            }
-
-            string y;
-            while (true)
-            {
-                Console.WriteLine("Введите второе число:");
-                y = Console.ReadLine();
-                if (DigitCheck(y)) break;
-                Console.WriteLine("Ошибка: введите корректное число.");
-            }
-
-            return new string[] { x, op, y };
+            return (x, op, y);
         }
 
-        public void Output(string[] init, double result)
+        public void Output((double x, string op, double y) init, double result)
         {
-            Console.WriteLine($"{init[0]}{init[1]}{init[2]}={result}");
+            Console.WriteLine($"{init.x} {init.op} {init.y} = {result}");
         }
     }
 }

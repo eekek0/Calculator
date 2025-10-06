@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Calculator
+﻿namespace Calculator
 {
     public class Operations
     {
@@ -22,7 +16,8 @@ namespace Calculator
         }
         public double Div(double x, double y)
         {
-            if (y == 0) throw new DivideByZeroException("Деление на ноль!");
+            if (y == 0)
+                return double.NaN;
             return x / y;
         }
     }
